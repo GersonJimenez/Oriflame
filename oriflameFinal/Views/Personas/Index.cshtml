@@ -1,0 +1,77 @@
+﻿@model IEnumerable<oriflameFinal.Models.Persona>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#pruebaMyTable3').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    </script>
+}
+
+<p>
+        <input type="button" class="btn btn-outline-success" value="Create" onclick="location.href='@Url.Action("Create", "Personas")'" />
+</p>
+    <table class="table table-hover display nowrap" id="pruebaMyTable3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+               Puesto
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                    @if (item.Estado.Trim() == "ACT")
+                    {
+                        <span class="badge bg-primary">ACTIVO</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">INACTIVO</span>
+                    }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPuestoNavigation.Descripcion)
+            </td>
+            <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-warning">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

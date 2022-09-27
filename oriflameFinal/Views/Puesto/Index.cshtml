@@ -1,0 +1,65 @@
+﻿@model IEnumerable<oriflameFinal.Models.Puesto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section scripts {
+<script type="text/javascript">
+$(document).ready(function() {
+        $('#pruebaMyTable2').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
+}
+
+<p>
+    <input type="button" class="btn btn-outline-success" value="Create" onclick="location.href='@Url.Action("Create", "Puesto")'" />
+</p>
+<table class="table table-hover display nowrap" id="pruebaMyTable2">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                Departamento
+            </th>
+             <th>
+                SubAlterno
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.Descripcion)
+            </td>
+             <td>
+                    @Html.DisplayFor(modelItem => item.IdJerarquiaNavigation.Descripcion)
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning" >Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> 
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
